@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+          cache: npm
+
+      - name: Install Compact Toolchain
+        run: |
+          curl -proto =https --tlsv1.2 -sSf https://raw.githubusercontent.com/midnightntwrk/compact/main/install.sh | sh || true
+          echo /home/shreya/.local/bin >> 
+
+      - name: Install Root Dependencies
+        run: npm ci || npm install
+
+      - name: Compile Compact Contract
+        run: npm run compile || compact compile contracts/confidential-dao.compact contracts/managed/confidential-dao
+
+      - name: Run Test Suite
+        run: npm test
+
+      - name: Build Frontend Application
+        run: |
+          cd frontend
+          npm ci || npm install
+          npm run build
