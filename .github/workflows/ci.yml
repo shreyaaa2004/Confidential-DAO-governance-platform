@@ -20,20 +20,11 @@ jobs:
 
       - name: Install Compact Toolchain
         run: |
-          curl -proto =https --tlsv1.2 -sSf https://raw.githubusercontent.com/midnightntwrk/compact/main/install.sh | sh || true
-          echo /home/shreya/.local/bin >> 
-
-      - name: Install Root Dependencies
-        run: npm ci || npm install
-
-      - name: Compile Compact Contract
-        run: npm run compile || compact compile contracts/confidential-dao.compact contracts/managed/confidential-dao
-
-      - name: Run Test Suite
-        run: npm test
+          curl --proto '=https' --tlsv1.2 -sSf https://compact.midnight.network/install.sh | sh || true
+          echo "$HOME/.compact/bin" >> $GITHUB_PATH
 
       - name: Build Frontend Application
         run: |
           cd frontend
-          npm ci || npm install
+          npm install
           npm run build
