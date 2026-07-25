@@ -24,6 +24,9 @@ jobs:
           echo "$HOME/.compact/bin" >> $GITHUB_PATH
           echo "$HOME/.local/bin" >> $GITHUB_PATH
 
+      - name: Install Root Dependencies
+        run: npm install
+
       - name: Compile Compact Contract
         run: |
           npm run compile || compact compile contracts/confidential-dao.compact contracts/managed/confidential-dao || echo "Using pre-compiled managed contract artifacts"
