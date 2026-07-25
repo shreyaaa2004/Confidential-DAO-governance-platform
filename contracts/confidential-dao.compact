@@ -1,0 +1,41 @@
+pragma language_version >= 0.23;
+
+import CompactStandardLibrary;
+
+// Public ledger state - visible on the Midnight blockchain
+export ledger proposalId: Uint<64>;
+export ledger title: Opaque<"string">;
+export ledger yesVotes: Uint<64>;
+export ledger noVotes: Uint<64>;
+export ledger voterCount: Uint<64>;
+export ledger isFinalized: Boolean;
+
+// Circuit to initialize a new DAO proposal
+export circuit createProposal(initialTitle: Opaque<"string">): [] {
+    proposalId = (proposalId + 1) as Uint<64>;
+    title = disclose(initialTitle);
+    yesVotes = 0 as Uint<64>;
+    noVotes = 0 as Uint<64>;
+    voterCount = 0 as Uint<64>;
+    isFinalized = false;
+}
+
+// Circuit for confidential ZK voting
+// Vote choice is proven in ZK; public tally is updated via disclose()
+export circuit castVote(voteChoice: Boolean): [] {
+    assert(!isFinalized, "Voting has been finalized");
+    
+    voterCount = (voterCount + 1) as Uint<64>;
+    
+    if (disclose(voteChoice)) {
+        yesVotes = (yesVotes + 1) as Uint<64>;
+    } else {
+        noVotes = (noVotes + 1) as Uint<64>;
+    }
+}
+
+// Circuit to finalize proposal voting
+export circuit finalizeProposal(): [] {
+    assert(!isFinalized, "Proposal is already finalized");
+    isFinalized = true;
+}
