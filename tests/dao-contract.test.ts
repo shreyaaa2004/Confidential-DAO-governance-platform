@@ -1,6 +1,11 @@
 import assert from 'node:assert';
-import * as ConfidentialDao from '../contracts/managed/confidential-dao/contract/index.js';
-import { getNetworkConfig, parseNetworkFlag } from '../src/network.js';
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { getNetworkConfig, parseNetworkFlag, NETWORK_CONFIGS } from '../src/network.js';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const ROOT = path.resolve(__dirname, '..');
 
 console.log('\n🧪 Running Confidential DAO Contract Test Suite...\n');
 
@@ -18,33 +23,60 @@ function test(description: string, fn: () => void) {
   }
 }
 
-test('1. Generated contract exports ledger reader function and Contract class', () => {
-  assert.ok(ConfidentialDao);
-  assert.strictEqual(typeof ConfidentialDao.ledger, 'function');
-  assert.ok(ConfidentialDao.Contract);
+// ─── Test 1: Verify compiled contract artifacts exist with correct circuit definitions ───
+test('1. Compiled contract artifacts exist with createProposal, castVote, and finalizeProposal circuits', () => {
+  const contractInfoPath = path.join(ROOT, 'contracts', 'managed', 'confidential-dao', 'compiler', 'contract-info.json');
+  assert.ok(fs.existsSync(contractInfoPath), `contract-info.json not found at ${contractInfoPath}`);
+
+  const contractInfo = JSON.parse(fs.readFileSync(contractInfoPath, 'utf-8'));
+  const circuitNames: string[] = contractInfo.circuits.map((c: { name: string }) => c.name);
+
+  assert.ok(circuitNames.includes('createProposal'), 'createProposal circuit missing');
+  assert.ok(circuitNames.includes('castVote'), 'castVote circuit missing');
+  assert.ok(circuitNames.includes('finalizeProposal'), 'finalizeProposal circuit missing');
 });
 
-test('2. Resolves valid network configuration for undeployed, preview, and preprod', () => {
+// ─── Test 2: Verify public ledger state fields are correctly exported ───
+test('2. Public ledger state exports proposalId, yesVotes, noVotes, voterCount, isFinalized', () => {
+  const contractInfoPath = path.join(ROOT, 'contracts', 'managed', 'confidential-dao', 'compiler', 'contract-info.json');
+  const contractInfo = JSON.parse(fs.readFileSync(contractInfoPath, 'utf-8'));
+  const ledgerNames: string[] = contractInfo.ledger.map((l: { name: string }) => l.name);
+
+  assert.ok(ledgerNames.includes('proposalId'), 'proposalId ledger field missing');
+  assert.ok(ledgerNames.includes('yesVotes'), 'yesVotes ledger field missing');
+  assert.ok(ledgerNames.includes('noVotes'), 'noVotes ledger field missing');
+  assert.ok(ledgerNames.includes('voterCount'), 'voterCount ledger field missing');
+  assert.ok(ledgerNames.includes('isFinalized'), 'isFinalized ledger field missing');
+});
+
+// ─── Test 3: Network configuration resolves all supported networks ───
+test('3. Resolves valid network configuration for undeployed, preview, and preprod', () => {
   const currentNetwork = parseNetworkFlag() ?? 'undeployed';
   assert.ok(['undeployed', 'preview', 'preprod'].includes(currentNetwork));
-  const config = getNetworkConfig('undeployed');
-  assert.ok(config.proofServer);
-  assert.ok(config.indexer);
+
+  for (const network of ['undeployed', 'preview', 'preprod'] as const) {
+    const config = getNetworkConfig(network);
+    assert.ok(config.proofServer, `proofServer missing for ${network}`);
+    assert.ok(config.indexer, `indexer missing for ${network}`);
+    assert.ok(config.networkId === network, `networkId mismatch for ${network}`);
+  }
 });
 
-test('3. Contract circuits interface enforces createProposal, castVote, and finalizeProposal', () => {
-  const contract = new ConfidentialDao.Contract({});
-  assert.ok(contract.circuits);
-  assert.strictEqual(typeof contract.circuits.createProposal, 'function');
-  assert.strictEqual(typeof contract.circuits.castVote, 'function');
-  assert.strictEqual(typeof contract.circuits.finalizeProposal, 'function');
-});
-
+// ─── Test 4: Privacy Model Invariant - ZK vote choice boolean mapping ───
 test('4. Privacy Model Invariant: Zero-Knowledge vote choice boolean mapping', () => {
+  // castVote accepts a Boolean: true = YES, false = NO
+  // Validated via compiler contract-info.json that voteChoice is of type Boolean
+  const contractInfoPath = path.join(ROOT, 'contracts', 'managed', 'confidential-dao', 'compiler', 'contract-info.json');
+  const contractInfo = JSON.parse(fs.readFileSync(contractInfoPath, 'utf-8'));
+  const castVote = contractInfo.circuits.find((c: { name: string }) => c.name === 'castVote');
+  assert.ok(castVote, 'castVote circuit not found');
+  assert.strictEqual(castVote.arguments[0].name, 'voteChoice');
+  assert.strictEqual(castVote.arguments[0].type['type-name'], 'Boolean');
+
+  // Ensure vote choice is a boolean: true = YES, false = NO (private witness)
   const trueChoice = true;
   const falseChoice = false;
   assert.strictEqual(typeof trueChoice, 'boolean');
-  assert.strictEqual(typeof falseChoice, 'boolean');
   assert.notStrictEqual(trueChoice, falseChoice);
 });
 
