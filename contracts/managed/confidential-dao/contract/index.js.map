@@ -1,0 +1,8 @@
+{
+  "version": 3,
+  "file": "index.js",
+  "sourceRoot": "../../../../",
+  "sources": ["contracts/confidential-dao.compact"],
+  "names": [],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;EAAA;;;;;;;;;;MAaA,AAAA,cAOC;;;;;cAP6B,cAA8B;;;;;;;;;;;yCAA9B,cAA8B;;;;;;;;;gDAA9B,cAA8B;;;OAO3D;MAID,AAAA,QAUC;;;;;cAVuB,YAAmB;;;;;;;;;;;;;;;;;;yCAAnB,YAAmB;;;;;;;;;0CAAnB,YAAmB;;;OAU1C;MAGD,AAAA,gBAGC;;;;;;;;;;;;;;;;;;;;;;OAAA;;;;;;;;;;;;GACA;EAzCD;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;IAKA;;;;;;;;;yEAAmC;IACnC;;;;;;;;;yEAAsC;IACtC;;;;;;;;;yEAAiC;IACjC;;;;;;;;;yEAAgC;IAChC;;;;;;;;;yEAAmC;IACnC;;;;;;;;;yEAAmC;;;;;;;GA+BlC;EA5BD,AAAA,iBAOC,4BAP6B,cAA8B;UACxD,KAAU;;;;;6CAAI;;;;;;;;;;;kHAAU;;;IAAxB;;;;;;;2HAAA,KAAU;;yEAAA;IACV;;;;;;;2HAAiB,cAAY;;yEAAxB;UACL,KAAQ;IAAR;;;;;;;2HAAA,KAAQ;;yEAAA;UACR,KAAO;IAAP;;;;;;;2HAAA,KAAO;;yEAAA;UACP,KAAU;IAAV;;;;;;;2HAAA,KAAU;;yEAAA;IACV;;;;;;;;;yEAAW;;GACd;EAID,AAAA,WAUC,4BAVuB,YAAmB;qDAC/B;;;;;;;;;;;0HAAW;;UAEnB,KAAU;;;;;6CAAI;;;;;;;;;;;kHAAU;;;IAAxB;;;;;;;2HAAA,KAAU;;yEAAA;QAEG,YAAU;YACnB,KAAQ;;;;;+CAAI;;;;;;;;;;;oHAAQ;;;MAApB;;;;;;;6HAAA,KAAQ;;2EAAA;;YAER,KAAO;;;;;+CAAI;;;;;;;;;;;oHAAO;;;MAAlB;;;;;;;6HAAA,KAAO;;2EAAA;;;GAEd;EAGD,AAAA,mBAGC;qDAFW;;;;;;;;;;;0HAAW;;IACnB;;;;;;;;;yEAAW;;GACd;;;;;;;;;;;;;;;;IAnCD;qCAAA;;;;;;;;;;;0GAAmC;KAAA;IACnC;qCAAA;;;;;;;;;;;0GAAsC;KAAA;IACtC;qCAAA;;;;;;;;;;;0GAAiC;KAAA;IACjC;qCAAA;;;;;;;;;;;0GAAgC;KAAA;IAChC;qCAAA;;;;;;;;;;;0GAAmC;KAAA;IACnC;qCAAA;;;;;;;;;;;0GAAmC;KAAA;;;;;;;;;;"
+}
