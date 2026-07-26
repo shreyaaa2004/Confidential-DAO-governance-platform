@@ -8,6 +8,14 @@ A full-stack Midnight dApp implementing **Private Voting** for confidential DAO 
 
 👉 **[https://youtu.be/wEE7oRRMXZ4](https://youtu.be/wEE7oRRMXZ4)**
 
+## 📸 Screenshots
+
+### App UI
+![Confidential DAO App](./docs/app-screenshot.png)
+
+### Vercel Deployment
+![Deployment](./docs/deployment-screenshot.png)
+
 
 ## 📌 Product Proposal & Level 3 Category: Private Voting
 
