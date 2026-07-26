@@ -8,6 +8,12 @@ A full-stack Midnight dApp implementing **Private Voting** for confidential DAO 
 
 👉 **[https://youtu.be/wEE7oRRMXZ4](https://youtu.be/wEE7oRRMXZ4)**
 
+## 🌐 Live Demo
+
+[![Live App](https://img.shields.io/badge/🚀%20Live%20App-Vercel-black?style=for-the-badge&logo=vercel)](https://confidential-dao-governance-platfor.vercel.app/)
+
+👉 **[https://confidential-dao-governance-platfor.vercel.app/](https://confidential-dao-governance-platfor.vercel.app/)**
+
 ## 📸 Screenshots
 
 ### App UI
