@@ -2,6 +2,13 @@
 
 A full-stack Midnight dApp implementing **Private Voting** for confidential DAO governance on the Midnight Network using Zero-Knowledge proofs.
 
+## 🎬 Demo Video
+
+[![Watch Demo](https://img.shields.io/badge/▶%20Watch%20Demo-YouTube-red?style=for-the-badge&logo=youtube)](https://youtu.be/wEE7oRRMXZ4)
+
+👉 **[https://youtu.be/wEE7oRRMXZ4](https://youtu.be/wEE7oRRMXZ4)**
+
+
 ## 📌 Product Proposal & Level 3 Category: Private Voting
 
 The **Confidential DAO Governance Platform** solves the public voting dilemma in traditional Web3 DAOs (where voter identities and individual ballot choices are exposed on-chain, leading to voter intimidation, whale collusion, and bandwagon bias).
