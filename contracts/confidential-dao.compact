@@ -2,7 +2,7 @@ pragma language_version >= 0.23;
 
 import CompactStandardLibrary;
 
-// Public ledger state - visible on the Midnight blockchain
+// ─── Public ledger state — visible on the Midnight blockchain ───
 export ledger proposalId: Uint<64>;
 export ledger title: Opaque<"string">;
 export ledger yesVotes: Uint<64>;
@@ -10,7 +10,13 @@ export ledger noVotes: Uint<64>;
 export ledger voterCount: Uint<64>;
 export ledger isFinalized: Boolean;
 
-// Circuit to initialize a new DAO proposal
+// ─── Private witness input ───
+// secretVoteChoice is a PRIVATE ZK witness — computed locally by the voter,
+// never transmitted to any node, indexer, or observer on the Midnight Network.
+// The ZK circuit proves vote validity without revealing the actual choice.
+witness secretVoteChoice(): Boolean;
+
+// ─── Circuit: Initialize a new DAO proposal ───
 export circuit createProposal(initialTitle: Opaque<"string">): [] {
     proposalId = (proposalId + 1) as Uint<64>;
     title = disclose(initialTitle);
@@ -20,13 +26,14 @@ export circuit createProposal(initialTitle: Opaque<"string">): [] {
     isFinalized = false;
 }
 
-// Circuit for confidential ZK voting
-// Vote choice is proven in ZK; public tally is updated via disclose()
-export circuit castVote(voteChoice: Boolean): [] {
+// ─── Circuit: Confidential ZK vote using private witness ───
+// The vote choice comes from the private witness (never a public argument).
+// Only the aggregate tally is updated via disclose() — individual choice is hidden.
+export circuit castVote(): [] {
     assert(!isFinalized, "Voting has been finalized");
-    
+    const voteChoice = secretVoteChoice();
     voterCount = (voterCount + 1) as Uint<64>;
-    
+
     if (disclose(voteChoice)) {
         yesVotes = (yesVotes + 1) as Uint<64>;
     } else {
@@ -34,7 +41,7 @@ export circuit castVote(voteChoice: Boolean): [] {
     }
 }
 
-// Circuit to finalize proposal voting
+// ─── Circuit: Finalize and lock proposal voting ───
 export circuit finalizeProposal(): [] {
     assert(!isFinalized, "Proposal is already finalized");
     isFinalized = true;

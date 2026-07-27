@@ -26,14 +26,7 @@
       "name": "castVote",
       "pure": false,
       "proof": true,
-      "arguments": [
-        {
-          "name": "voteChoice",
-          "type": {
-            "type-name": "Boolean"
-          }
-        }
-      ],
+      "arguments": [],
       "result-type": {
         "type-name": "Tuple",
         "types": [
@@ -54,6 +47,13 @@
     }
   ],
   "witnesses": [
+    {
+      "name": "secretVoteChoice",
+      "arguments": [],
+      "result-type": {
+        "type-name": "Boolean"
+      }
+    }
   ],
   "contracts": [
   ],

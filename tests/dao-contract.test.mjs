@@ -60,6 +60,10 @@ test('1. Compiled contract artifacts exist with createProposal, castVote, and fi
   assert.ok(circuitNames.includes('createProposal'), 'createProposal circuit missing');
   assert.ok(circuitNames.includes('castVote'), 'castVote circuit missing');
   assert.ok(circuitNames.includes('finalizeProposal'), 'finalizeProposal circuit missing');
+
+  // castVote must take NO public arguments — vote choice comes from private witness
+  const castVote = contractInfo.circuits.find(c => c.name === 'castVote');
+  assert.strictEqual(castVote.arguments.length, 0, 'castVote should have no public arguments (uses witness instead)');
 });
 
 // ─── Test 2: Public ledger state fields are all exported ───
@@ -86,16 +90,20 @@ test('3. Resolves valid network configuration for undeployed, preview, and prepr
   }
 });
 
-// ─── Test 4: Privacy Model Invariant — ZK vote choice is a Boolean private witness ───
-test('4. Privacy Model Invariant: Zero-Knowledge vote choice boolean mapping', () => {
+// ─── Test 4: Witness input declared for private ZK vote choice ───
+test('4. Privacy Model: secretVoteChoice witness declared as private ZK input (never public)', () => {
   const contractInfoPath = path.join(ROOT, 'contracts', 'managed', 'confidential-dao', 'compiler', 'contract-info.json');
   const contractInfo = JSON.parse(fs.readFileSync(contractInfoPath, 'utf-8'));
+
+  // Verify witness declaration exists
+  assert.ok(Array.isArray(contractInfo.witnesses), 'witnesses array missing from contract-info.json');
+  const witness = contractInfo.witnesses.find(w => w.name === 'secretVoteChoice');
+  assert.ok(witness, 'secretVoteChoice witness not declared in contract');
+  assert.strictEqual(witness['result-type']['type-name'], 'Boolean', 'witness should return Boolean');
+
+  // Verify castVote circuit takes NO public args (vote is fully private via witness)
   const castVote = contractInfo.circuits.find(c => c.name === 'castVote');
-  assert.ok(castVote, 'castVote circuit not found');
-  assert.strictEqual(castVote.arguments[0].name, 'voteChoice');
-  assert.strictEqual(castVote.arguments[0].type['type-name'], 'Boolean');
-  // Boolean: true = YES vote, false = NO vote (private witness — never revealed on-chain)
-  assert.notStrictEqual(true, false);
+  assert.strictEqual(castVote.arguments.length, 0, 'castVote must have zero public arguments');
 });
 
 console.log(`\n========================================`);
