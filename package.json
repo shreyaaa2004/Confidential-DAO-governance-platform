@@ -37,6 +37,12 @@
     "rxjs": "^7.8.2",
     "ws": "^8.21.1"
   },
+  "overrides": {
+    "@polkadot/util": "$@polkadot/util",
+    "@polkadot/util-crypto": "$@polkadot/util-crypto",
+    "@polkadot/api": "$@polkadot/api",
+    "@polkadot/types": "$@polkadot/types"
+  },
   "devDependencies": {
     "@types/node": "^22.0.0",
     "@types/ws": "^8.18.1",

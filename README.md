@@ -7,10 +7,14 @@ A full-stack Midnight dApp implementing **Private Voting** for confidential DAO 
 [![Level 2](https://img.shields.io/badge/Level%202-✅%20Passed-brightgreen?style=flat-square)](./PROPOSAL.md)
 [![Level 3](https://img.shields.io/badge/Level%203-✅%20Complete-brightgreen?style=flat-square)](./PROPOSAL.md)
 
-> **📋 Preprod Deployment: WAIVED**
-> Per mentor guidance: *"If you're unable to deploy, just build the full-stack dApp and submit it."*
-> Full-stack dApp is live at: **https://confidential-dao-governance-platfor.vercel.app/**
-> Contract address on Preprod: **WAIVED** — see [PROPOSAL.md](./PROPOSAL.md) for details.
+> **📋 Deployment Status & Network Configuration**
+> - **Live Full-Stack dApp**: **https://confidential-dao-governance-platfor.vercel.app/**
+> - **Target Network**: Midnight Preview Testnet (`preview`)
+> - **Node RPC**: `https://rpc.preview.midnight.network`
+> - **Indexer Endpoint**: `https://indexer.preview.midnight.network/api/v4/graphql`
+> - **Preview Deployer Wallet Address**: `mn_addr_preview1wa7egjxq4ynqz8n4wuss5hsrcqye59w2rv35ayy84nrgdn5kmu3qwsc65z`
+> - **Preview Faucet**: https://midnight-tmnight-preview.nethermind.dev
+> - **Preprod Address**: **WAIVED** per mentor guidance (see [PROPOSAL.md](./PROPOSAL.md))
 
 
 ## 🎬 Demo Video
