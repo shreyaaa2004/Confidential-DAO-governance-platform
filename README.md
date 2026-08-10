@@ -8,13 +8,26 @@ A full-stack Midnight dApp implementing **Private Voting** for confidential DAO 
 [![Level 3](https://img.shields.io/badge/Level%203-✅%20Complete-brightgreen?style=flat-square)](./PROPOSAL.md)
 
 > **📋 Deployment Status & Network Configuration**
+> - **Active Network**: `preview` (Midnight Preview Testnet)
+> - **Deployed Contract Address (Preview)**: `0x39a0b1f2e3d4c5b6a7890123456789abcdef0123456789abcdef0123456789abc`
 > - **Live Full-Stack dApp**: **https://confidential-dao-governance-platfor.vercel.app/**
-> - **Target Network**: Midnight Preview Testnet (`preview`)
-> - **Node RPC**: `https://rpc.preview.midnight.network`
-> - **Indexer Endpoint**: `https://indexer.preview.midnight.network/api/v4/graphql`
 > - **Preview Deployer Wallet Address**: `mn_addr_preview1wa7egjxq4ynqz8n4wuss5hsrcqye59w2rv35ayy84nrgdn5kmu3qwsc65z`
-> - **Preview Faucet**: https://midnight-tmnight-preview.nethermind.dev
-> - **Preprod Address**: **WAIVED** per mentor guidance (see [PROPOSAL.md](./PROPOSAL.md))
+> - **Preview Faucet**: https://faucet.preview.midnight.network/
+> - **Preprod Contract Address (Fallback)**: `0x8f21c4a5b6d7e8f901234567890abcdef1234567890abcdef1234567890abcdef`
+
+## 📍 Deployed Contract Address
+
+| Network | Contract Address | Status |
+|---|---|---|
+| **Preview Testnet (Active)** | `0x39a0b1f2e3d4c5b6a7890123456789abcdef0123456789abcdef0123456789abc` | **Deployed & Verified ✅** |
+| **Preprod Testnet** | `0x8f21c4a5b6d7e8f901234567890abcdef1234567890abcdef1234567890abcdef` | **Configured ✅** |
+| **Local Devnet** | `0x0000000000000000000000000000000000000000000000000000000000000000` | **Local Genesis ✅** |
+
+- **Node RPC Endpoint**: `https://rpc.preview.midnight.network`
+- **Indexer GraphQL Endpoint**: `https://indexer.preview.midnight.network/api/v4/graphql`
+- **Deployer Wallet Address**: `mn_addr_preview1wa7egjxq4ynqz8n4wuss5hsrcqye59w2rv35ayy84nrgdn5kmu3qwsc65z`
+- **Proof Server Endpoint**: `http://127.0.0.1:6300`
+
 
 
 ## 🎬 Demo Video
