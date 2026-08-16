@@ -54,8 +54,12 @@ coverage/
 tmp/
 temp/
 
-# Midnight network state (per-network seeds, deploy addresses)
-.midnight-state.json
+# Next.js and build outputs
+.next/
+out/
+frontend/dist/
+frontend/.next/
+frontend/out/
 
 # Midnight wallet sync state (per-network serialized wallet state cache)
 .midnight-wallet-state/
