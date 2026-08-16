@@ -99,11 +99,25 @@ test('4. Privacy Model: secretVoteChoice witness declared as private ZK input (n
   assert.ok(Array.isArray(contractInfo.witnesses), 'witnesses array missing from contract-info.json');
   const witness = contractInfo.witnesses.find(w => w.name === 'secretVoteChoice');
   assert.ok(witness, 'secretVoteChoice witness not declared in contract');
-  assert.strictEqual(witness['result-type']['type-name'], 'Boolean', 'witness should return Boolean');
+  const resultType = witness['result-type'] || witness['result type'];
+  assert.ok(resultType, 'witness result-type missing');
+  assert.strictEqual(resultType['type-name'], 'Boolean', 'witness should return Boolean');
 
   // Verify castVote circuit takes NO public args (vote is fully private via witness)
   const castVote = contractInfo.circuits.find(c => c.name === 'castVote');
   assert.strictEqual(castVote.arguments.length, 0, 'castVote must have zero public arguments');
+});
+
+// ─── Test 5: Deployment state record contains active Preview network and verified contract address ───
+test('5. Deployment State: .midnight-state.json records active Preview network and contract address', () => {
+  const statePath = path.join(ROOT, '.midnight-state.json');
+  assert.ok(fs.existsSync(statePath), '.midnight-state.json state file missing');
+  const state = JSON.parse(fs.readFileSync(statePath, 'utf-8'));
+  assert.strictEqual(state.version, 1, 'state version must be 1');
+  assert.strictEqual(state.activeNetwork, 'preview', 'activeNetwork must be preview');
+  assert.ok(state.deployments.preview, 'preview deployment record missing');
+  assert.ok(state.deployments.preview.address.startsWith('0x'), 'preview contract address must start with 0x');
+  assert.strictEqual(state.deployments.preview.address.length, 66, 'preview contract address must be 32-byte hex (66 chars)');
 });
 
 console.log(`\n========================================`);

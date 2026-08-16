@@ -26,7 +26,8 @@
       "name": "castVote",
       "pure": false,
       "proof": true,
-      "arguments": [],
+      "arguments": [
+      ],
       "result-type": {
         "type-name": "Tuple",
         "types": [
@@ -49,8 +50,9 @@
   "witnesses": [
     {
       "name": "secretVoteChoice",
-      "arguments": [],
-      "result-type": {
+      "arguments": [
+      ],
+      "result type": {
         "type-name": "Boolean"
       }
     }

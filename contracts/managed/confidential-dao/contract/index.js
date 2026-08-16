@@ -57,6 +57,9 @@ export class Contract {
     if (typeof(witnesses_0) !== 'object') {
       throw new __compactRuntime.CompactError('first (witnesses) argument to Contract constructor is not an object');
     }
+    if (typeof(witnesses_0.secretVoteChoice) !== 'function') {
+      throw new __compactRuntime.CompactError('first (witnesses) argument to Contract constructor does not contain a function-valued field named secretVoteChoice');
+    }
     this.witnesses = witnesses_0;
     this.circuits = {
       createProposal: (...args_1) => {
@@ -68,7 +71,7 @@ export class Contract {
         if (!(typeof(contextOrig_0) === 'object' && contextOrig_0.currentQueryContext != undefined)) {
           __compactRuntime.typeError('createProposal',
                                      'argument 1 (as invoked from Typescript)',
-                                     'confidential-dao.compact line 14 char 1',
+                                     'confidential-dao.compact line 20 char 1',
                                      'CircuitContext',
                                      contextOrig_0)
         }
@@ -89,38 +92,25 @@ export class Contract {
         return { result: result_0, context: context, proofData: partialProofData, gasCost: context.gasCost };
       },
       castVote: (...args_1) => {
-        if (args_1.length !== 2) {
-          throw new __compactRuntime.CompactError(`castVote: expected 2 arguments (as invoked from Typescript), received ${args_1.length}`);
+        if (args_1.length !== 1) {
+          throw new __compactRuntime.CompactError(`castVote: expected 1 argument (as invoked from Typescript), received ${args_1.length}`);
         }
         const contextOrig_0 = args_1[0];
-        const voteChoice_0 = args_1[1];
         if (!(typeof(contextOrig_0) === 'object' && contextOrig_0.currentQueryContext != undefined)) {
           __compactRuntime.typeError('castVote',
                                      'argument 1 (as invoked from Typescript)',
-                                     'confidential-dao.compact line 25 char 1',
+                                     'confidential-dao.compact line 32 char 1',
                                      'CircuitContext',
                                      contextOrig_0)
         }
-        if (!(typeof(voteChoice_0) === 'boolean')) {
-          __compactRuntime.typeError('castVote',
-                                     'argument 1 (argument 2 as invoked from Typescript)',
-                                     'confidential-dao.compact line 25 char 1',
-                                     'Boolean',
-                                     voteChoice_0)
-        }
         const context = { ...contextOrig_0, gasCost: __compactRuntime.emptyRunningCost() };
         const partialProofData = {
-          input: {
-            value: _descriptor_0.toValue(voteChoice_0),
-            alignment: _descriptor_0.alignment()
-          },
+          input: { value: [], alignment: [] },
           output: undefined,
           publicTranscript: [],
           privateTranscriptOutputs: []
         };
-        const result_0 = this._castVote_0(context,
-                                          partialProofData,
-                                          voteChoice_0);
+        const result_0 = this._castVote_0(context, partialProofData);
         partialProofData.output = { value: [], alignment: [] };
         return { result: result_0, context: context, proofData: partialProofData, gasCost: context.gasCost };
       },
@@ -132,7 +122,7 @@ export class Contract {
         if (!(typeof(contextOrig_0) === 'object' && contextOrig_0.currentQueryContext != undefined)) {
           __compactRuntime.typeError('finalizeProposal',
                                      'argument 1 (as invoked from Typescript)',
-                                     'confidential-dao.compact line 38 char 1',
+                                     'confidential-dao.compact line 45 char 1',
                                      'CircuitContext',
                                      contextOrig_0)
         }
@@ -166,6 +156,9 @@ export class Contract {
     const constructorContext_0 = args_0[0];
     if (typeof(constructorContext_0) !== 'object') {
       throw new __compactRuntime.CompactError(`Contract state constructor: expected 'constructorContext' in argument 1 (as invoked from Typescript) to be an object`);
+    }
+    if (!('initialPrivateState' in constructorContext_0)) {
+      throw new __compactRuntime.CompactError(`Contract state constructor: expected 'initialPrivateState' in argument 1 (as invoked from Typescript)`);
     }
     if (!('initialZswapLocalState' in constructorContext_0)) {
       throw new __compactRuntime.CompactError(`Contract state constructor: expected 'initialZswapLocalState' in argument 1 (as invoked from Typescript)`);
@@ -259,10 +252,27 @@ export class Contract {
       currentZswapLocalState: context.currentZswapLocalState
     }
   }
+  _secretVoteChoice_0(context, partialProofData) {
+    const witnessContext_0 = __compactRuntime.createWitnessContext(ledger(context.currentQueryContext.state), context.currentPrivateState, context.currentQueryContext.address);
+    const [nextPrivateState_0, result_0] = this.witnesses.secretVoteChoice(witnessContext_0);
+    context.currentPrivateState = nextPrivateState_0;
+    if (!(typeof(result_0) === 'boolean')) {
+      __compactRuntime.typeError('secretVoteChoice',
+                                 'return value',
+                                 'confidential-dao.compact line 17 char 1',
+                                 'Boolean',
+                                 result_0)
+    }
+    partialProofData.privateTranscriptOutputs.push({
+      value: _descriptor_0.toValue(result_0),
+      alignment: _descriptor_0.alignment()
+    });
+    return result_0;
+  }
   _createProposal_0(context, partialProofData, initialTitle_0) {
     const tmp_0 = ((t1) => {
                     if (t1 > 18446744073709551615n) {
-                      throw new __compactRuntime.CompactError('confidential-dao.compact line 15 char 18: cast from Field or Uint value to smaller Uint value failed: ' + t1 + ' is greater than 18446744073709551615');
+                      throw new __compactRuntime.CompactError('confidential-dao.compact line 21 char 18: cast from Field or Uint value to smaller Uint value failed: ' + t1 + ' is greater than 18446744073709551615');
                     }
                     return t1;
                   })(_descriptor_1.fromValue(__compactRuntime.queryLedgerState(context,
@@ -344,7 +354,7 @@ export class Contract {
                                        { ins: { cached: false, n: 1 } }]);
     return [];
   }
-  _castVote_0(context, partialProofData, voteChoice_0) {
+  _castVote_0(context, partialProofData) {
     __compactRuntime.assert(!_descriptor_0.fromValue(__compactRuntime.queryLedgerState(context,
                                                                                        partialProofData,
                                                                                        [
@@ -358,9 +368,10 @@ export class Contract {
                                                                                         { popeq: { cached: false,
                                                                                                    result: undefined } }]).value),
                             'Voting has been finalized');
+    const voteChoice_0 = this._secretVoteChoice_0(context, partialProofData);
     const tmp_0 = ((t1) => {
                     if (t1 > 18446744073709551615n) {
-                      throw new __compactRuntime.CompactError('confidential-dao.compact line 28 char 18: cast from Field or Uint value to smaller Uint value failed: ' + t1 + ' is greater than 18446744073709551615');
+                      throw new __compactRuntime.CompactError('confidential-dao.compact line 35 char 18: cast from Field or Uint value to smaller Uint value failed: ' + t1 + ' is greater than 18446744073709551615');
                     }
                     return t1;
                   })(_descriptor_1.fromValue(__compactRuntime.queryLedgerState(context,
@@ -390,7 +401,7 @@ export class Contract {
     if (voteChoice_0) {
       const tmp_1 = ((t1) => {
                       if (t1 > 18446744073709551615n) {
-                        throw new __compactRuntime.CompactError('confidential-dao.compact line 31 char 20: cast from Field or Uint value to smaller Uint value failed: ' + t1 + ' is greater than 18446744073709551615');
+                        throw new __compactRuntime.CompactError('confidential-dao.compact line 38 char 20: cast from Field or Uint value to smaller Uint value failed: ' + t1 + ' is greater than 18446744073709551615');
                       }
                       return t1;
                     })(_descriptor_1.fromValue(__compactRuntime.queryLedgerState(context,
@@ -420,7 +431,7 @@ export class Contract {
     } else {
       const tmp_2 = ((t1) => {
                       if (t1 > 18446744073709551615n) {
-                        throw new __compactRuntime.CompactError('confidential-dao.compact line 33 char 19: cast from Field or Uint value to smaller Uint value failed: ' + t1 + ' is greater than 18446744073709551615');
+                        throw new __compactRuntime.CompactError('confidential-dao.compact line 40 char 19: cast from Field or Uint value to smaller Uint value failed: ' + t1 + ' is greater than 18446744073709551615');
                       }
                       return t1;
                     })(_descriptor_1.fromValue(__compactRuntime.queryLedgerState(context,
@@ -580,7 +591,9 @@ export function ledger(stateOrChargedState) {
 const _emptyContext = {
   currentQueryContext: new __compactRuntime.QueryContext(new __compactRuntime.ContractState().data, __compactRuntime.dummyContractAddress())
 };
-const _dummyContract = new Contract({ });
+const _dummyContract = new Contract({
+  secretVoteChoice: (...args) => undefined
+});
 export const pureCircuits = {};
 export const contractReferenceLocations =
   { tag: 'publicLedgerArray', indices: { } };

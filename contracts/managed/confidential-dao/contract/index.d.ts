@@ -1,19 +1,20 @@
 import type * as __compactRuntime from '@midnight-ntwrk/compact-runtime';
 
 export type Witnesses<PS> = {
+  secretVoteChoice(context: __compactRuntime.WitnessContext<Ledger, PS>): [PS, boolean];
 }
 
 export type ImpureCircuits<PS> = {
   createProposal(context: __compactRuntime.CircuitContext<PS>,
                  initialTitle_0: string): __compactRuntime.CircuitResults<PS, []>;
-  castVote(context: __compactRuntime.CircuitContext<PS>, voteChoice_0: boolean): __compactRuntime.CircuitResults<PS, []>;
+  castVote(context: __compactRuntime.CircuitContext<PS>): __compactRuntime.CircuitResults<PS, []>;
   finalizeProposal(context: __compactRuntime.CircuitContext<PS>): __compactRuntime.CircuitResults<PS, []>;
 }
 
 export type ProvableCircuits<PS> = {
   createProposal(context: __compactRuntime.CircuitContext<PS>,
                  initialTitle_0: string): __compactRuntime.CircuitResults<PS, []>;
-  castVote(context: __compactRuntime.CircuitContext<PS>, voteChoice_0: boolean): __compactRuntime.CircuitResults<PS, []>;
+  castVote(context: __compactRuntime.CircuitContext<PS>): __compactRuntime.CircuitResults<PS, []>;
   finalizeProposal(context: __compactRuntime.CircuitContext<PS>): __compactRuntime.CircuitResults<PS, []>;
 }
 
@@ -23,7 +24,7 @@ export type PureCircuits = {
 export type Circuits<PS> = {
   createProposal(context: __compactRuntime.CircuitContext<PS>,
                  initialTitle_0: string): __compactRuntime.CircuitResults<PS, []>;
-  castVote(context: __compactRuntime.CircuitContext<PS>, voteChoice_0: boolean): __compactRuntime.CircuitResults<PS, []>;
+  castVote(context: __compactRuntime.CircuitContext<PS>): __compactRuntime.CircuitResults<PS, []>;
   finalizeProposal(context: __compactRuntime.CircuitContext<PS>): __compactRuntime.CircuitResults<PS, []>;
 }
 

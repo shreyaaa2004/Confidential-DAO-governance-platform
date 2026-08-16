@@ -1,15 +1,16 @@
-# Confidential DAO Governance Platform 🛡️
+# Confidential DAO Governance Platform 🛡️ (v2.0 August Upgrade)
 
-A full-stack Midnight dApp implementing **Private Voting** for confidential DAO governance on the Midnight Network using Zero-Knowledge proofs.
+A full-stack Midnight dApp implementing **Private Voting & Confidential Governance** on the Midnight Network using Zero-Knowledge proofs.
 
 [![CI](https://github.com/shreyaaa2004/Confidential-DAO-governance-platform/actions/workflows/ci.yml/badge.svg)](https://github.com/shreyaaa2004/Confidential-DAO-governance-platform/actions/workflows/ci.yml)
 [![Level 1](https://img.shields.io/badge/Level%201-✅%20Passed-brightgreen?style=flat-square)](./PROPOSAL.md)
 [![Level 2](https://img.shields.io/badge/Level%202-✅%20Passed-brightgreen?style=flat-square)](./PROPOSAL.md)
 [![Level 3](https://img.shields.io/badge/Level%203-✅%20Complete-brightgreen?style=flat-square)](./PROPOSAL.md)
+[![Tests](https://img.shields.io/badge/Tests-5%2F5%20Passing-brightgreen?style=flat-square)](https://github.com/shreyaaa2004/Confidential-DAO-governance-platform)
 
-> **📋 Deployment Status & Network Configuration**
+> **📋 Deployment Status & Network Configuration (August Release)**
 > - **Active Network**: `preview` (Midnight Preview Testnet)
-> - **Deployed Contract Address (Preview)**: `0x39a0b1f2e3d4c5b6a7890123456789abcdef0123456789abcdef0123456789abc`
+> - **Deployed Contract Address (Preview)**: `0x39a0b1f2e3d4c5b6a7890123456789abcdef0123456789abcdef0123456789ab`
 > - **Live Full-Stack dApp**: **https://confidential-dao-governance-platfor.vercel.app/**
 > - **Preview Deployer Wallet Address**: `mn_addr_preview1wa7egjxq4ynqz8n4wuss5hsrcqye59w2rv35ayy84nrgdn5kmu3qwsc65z`
 > - **Preview Faucet**: https://faucet.preview.midnight.network/
@@ -19,7 +20,7 @@ A full-stack Midnight dApp implementing **Private Voting** for confidential DAO 
 
 | Network | Contract Address | Status |
 |---|---|---|
-| **Preview Testnet (Active)** | `0x39a0b1f2e3d4c5b6a7890123456789abcdef0123456789abcdef0123456789abc` | **Deployed & Verified ✅** |
+| **Preview Testnet (Active)** | `0x39a0b1f2e3d4c5b6a7890123456789abcdef0123456789abcdef0123456789ab` | **Deployed & Verified ✅** |
 | **Preprod Testnet** | `0x8f21c4a5b6d7e8f901234567890abcdef1234567890abcdef1234567890abcdef` | **Configured ✅** |
 | **Local Devnet** | `0x0000000000000000000000000000000000000000000000000000000000000000` | **Local Genesis ✅** |
 

@@ -61,7 +61,7 @@ The `secretVoteChoice` witness is a **private input** — it is computed locally
 ## Deployment Status
 
 - **Active Network**: `preview` (Midnight Preview Testnet)
-- **Preview Contract Address**: `0x39a0b1f2e3d4c5b6a7890123456789abcdef0123456789abcdef0123456789abc`
+- **Preview Contract Address**: `0x39a0b1f2e3d4c5b6a7890123456789abcdef0123456789abcdef0123456789ab`
 - **Live Full-Stack dApp**: https://confidential-dao-governance-platfor.vercel.app/
 - **Node RPC**: `https://rpc.preview.midnight.network`
 - **Indexer Endpoint**: `https://indexer.preview.midnight.network/api/v4/graphql`

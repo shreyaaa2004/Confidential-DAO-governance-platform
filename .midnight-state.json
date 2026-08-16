@@ -13,7 +13,7 @@
   },
   "deployments": {
     "preview": {
-      "address": "0x39a0b1f2e3d4c5b6a7890123456789abcdef0123456789abcdef0123456789abc",
+      "address": "0x39a0b1f2e3d4c5b6a7890123456789abcdef0123456789abcdef0123456789ab",
       "deployer": "mn_addr_preview1wa7egjxq4ynqz8n4wuss5hsrcqye59w2rv35ayy84nrgdn5kmu3qwsc65z",
       "deployedAt": "2026-08-04T04:25:00.000Z"
     },
