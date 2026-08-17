@@ -72,7 +72,7 @@ The `secretVoteChoice` witness is a **private input** — it is computed locally
 ## Live Links
 
 - 🌐 **Live App**: https://confidential-dao-governance-platfor.vercel.app/
-- 🎬 **Demo Video**: https://youtu.be/wEE7oRRMXZ4
+- 🎬 **Demo Video**: https://youtu.be/zwHJ7yW9dJM
 - 📦 **GitHub**: https://github.com/shreyaaa2004/Confidential-DAO-governance-platform
 
 ## Level Checklist

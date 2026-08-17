@@ -33,9 +33,9 @@ A full-stack Midnight dApp implementing **Private Voting & Confidential Governan
 
 ## 🎬 Demo Video
 
-[![Watch Demo](https://img.shields.io/badge/▶%20Watch%20Demo-YouTube-red?style=for-the-badge&logo=youtube)](https://youtu.be/wEE7oRRMXZ4)
+[![Watch Demo](https://img.shields.io/badge/▶%20Watch%20Demo-YouTube-red?style=for-the-badge&logo=youtube)](https://youtu.be/zwHJ7yW9dJM)
 
-👉 **[https://youtu.be/wEE7oRRMXZ4](https://youtu.be/wEE7oRRMXZ4)**
+👉 **[https://youtu.be/zwHJ7yW9dJM](https://youtu.be/zwHJ7yW9dJM)**
 
 ## 🌐 Live Demo
 
