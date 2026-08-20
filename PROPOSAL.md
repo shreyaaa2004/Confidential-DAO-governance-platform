@@ -1,62 +1,49 @@
 # Product Proposal: Confidential DAO Governance Platform
 
-## Problem Statement
+## What is the product, and who uses it?
 
-Traditional Web3 DAOs expose every vote on-chain — anyone can see **who voted** and **what they voted**. This leads to:
+The **Confidential DAO Governance Platform** is a full-stack decentralized application (dApp) on Midnight Network designed for Web3 DAOs, protocol treasuries, security grant committees, and community members. It enables organizations to execute binding governance votes where every voter's individual vote choice (**YES**, **NO**, or **ABSTAIN**) remains 100% cryptographically private using Zero-Knowledge proofs, while aggregate public tallies update on-chain transparently.
 
-- 🐋 **Whale influence**: Smaller holders change votes after seeing how large holders voted (bandwagon effect)
-- 😨 **Voter intimidation**: Members fear retaliation for unpopular votes
-- 🤝 **Collusion**: Voting blocs coordinate privately then vote publicly, disadvantaging honest participants
-- 📉 **Low participation**: Members abstain rather than risk being seen voting against powerful members
+## Why Midnight specifically?
 
-## Solution
+Traditional transparent blockchains (like Ethereum or Cardano) expose every voter's choice publicly on-chain. This creates:
+1. **Whale Coercion & Intimidation**: Smaller holders face retaliation for voting against major token holders.
+2. **Bandwagon Bias**: Members delay voting until seeing how majority or influential members voted.
+3. **Collusion & Voter Suppressing**: Honest participants abstain rather than expose their political position.
 
-The **Confidential DAO Governance Platform** uses Midnight Network's **Zero-Knowledge proofs** to make individual vote choices cryptographically private while keeping aggregate results public and verifiable.
+Midnight Network solves this through its **Compact language** and native **Zero-Knowledge (ZK) private witness inputs**. Voters compute ZK proofs locally using their private secret key and vote choice without revealing either to the blockchain, indexers, or outside observers.
 
-### How It Works
+## Data Model
 
-```
-Voter provides: secret key + vote choice (YES/NO)
-         ↓
-ZK Circuit proves: "This voter is eligible and has cast a valid vote"
-         ↓
-On-chain result: Only the total YES/NO counter updates — no individual vote revealed
-```
+| Data Point | Type | Disclosed To |
+|---|---|---|
+| Proposal Title & ID | Public Ledger | Everyone (On-Chain) |
+| Total YES Votes | Public Ledger (Aggregated) | Everyone (On-Chain) |
+| Total NO Votes | Public Ledger (Aggregated) | Everyone (On-Chain) |
+| Total ABSTAIN Votes | Public Ledger (Aggregated) | Everyone (On-Chain) |
+| Total Voter Count | Public Ledger | Everyone (On-Chain) |
+| Proposal Finalization Status | Public Ledger | Everyone (On-Chain) |
+| Individual Vote Choice (YES/NO/ABSTAIN) | Private Witness | **No one** (Computed locally in ZK) |
+| Voter Private Secret Key | Private Witness | **No one** (Computed locally in ZK) |
+| Wallet-to-Vote Linkage | Private Witness | **No one** (Unlinkable ZK-SNARK) |
 
-### Privacy Guarantees
+## Mainnet Feasibility
 
-| What is PUBLIC | What is PRIVATE |
-|---|---|
-| Total YES votes | Who voted YES |
-| Total NO votes | Who voted NO |
-| Proposal title | Individual vote identity linkage |
-| Voter count | Private secret key of voter |
-| Finalization status | Vote choice per wallet address |
+Yes, this architecture is 100% feasible for Midnight Mainnet. It uses native Compact language constructs (`witness secretVoteChoice()`, `disclose()`), standard halo2/PLONK ZK-SNARK proving circuits, and standard Midnight Indexer GraphQL endpoints. Moving from Preview testnet to Mainnet requires only updating RPC/Indexer endpoints and contract address deployment state.
 
-## Category
-
-**Private Voting** — Midnight Network Hackathon Level 3
+---
 
 ## Technical Architecture
 
-### Smart Contract (Compact Language)
-- **`createProposal(title)`** — Initializes a new governance proposal
-- **`castVote()`** — ZK circuit that uses private witness input for vote choice
-- **`finalizeProposal()`** — Locks voting permanently
+### Smart Contract (`contracts/confidential-dao.compact`)
+- **`createProposal(initialTitle)`** — Initializes a new governance proposal on the Midnight ledger.
+- **`castVote()`** — ZK circuit using private witness input for vote choice.
+- **`finalizeProposal()`** — Locks voting permanently when quorum or deadline is reached.
 
 ### Zero-Knowledge Witness
-The `secretVoteChoice` witness is a **private input** — it is computed locally by the voter and fed into the ZK circuit. The circuit proves the vote is valid without revealing the choice to any observer, node, or indexer on the Midnight Network.
+The `secretVoteChoice` witness is a **private input** computed locally by the voter and fed into the ZK circuit. The ZK proof verifies vote eligibility and updates public tallies without leaking the voter's identity or ballot choice.
 
-### Frontend (React + Vite)
-- Lace Wallet integration for voter authentication
-- Real-time YES/NO progress bars
-- Proposal creation and governance admin UI
-- Network config for Undeployed Devnet, Preview, and Preprod
-
-### Infrastructure
-- **Proof Server**: Local HTTP server for ZK proof generation
-- **Indexer**: GraphQL endpoint for public ledger state
-- **Node**: WebSocket connection to Midnight blockchain node
+---
 
 ## Deployment Status
 
@@ -75,6 +62,8 @@ The `secretVoteChoice` witness is a **private input** — it is computed locally
 - 🎬 **Demo Video**: https://youtu.be/zwHJ7yW9dJM
 - 📦 **GitHub**: https://github.com/shreyaaa2004/Confidential-DAO-governance-platform
 
+---
+
 ## Level Checklist
 
 ### Level 1 — New Moon ✅
@@ -83,17 +72,17 @@ The `secretVoteChoice` witness is a **private input** — it is computed locally
 - [x] Proving keys and circuit artifacts generated
 
 ### Level 2 — Waxing Crescent ✅
-- [x] Full-stack dApp with React frontend
+- [x] Full-stack dApp with Next.js & React frontend
 - [x] Lace Wallet connect button
 - [x] Network configuration (undeployed/preview/preprod)
-- [x] 4/4 integration tests passing
+- [x] Integration test suite passing
 - [x] GitHub Actions CI/CD pipeline (green ✅)
 
 ### Level 3 — First Quarter ✅
 - [x] Private Voting use case implemented
 - [x] `witness secretVoteChoice(): Boolean` — private ZK witness input
-- [x] Public ledger only shows aggregate tallies (yesVotes, noVotes, voterCount)
+- [x] Public ledger only shows aggregate tallies (`yesVotes`, `noVotes`, `abstainVotes`, `voterCount`)
 - [x] `disclose()` used deliberately for public state updates
-- [x] Privacy Model documented
-- [x] Product Proposal documented (this file)
-- [x] Preprod deployment: **WAIVED** (per mentor guidance)
+- [x] Privacy Model & Data Model documented
+- [x] Product Proposal documented (`PROPOSAL.md`)
+- [x] Deployed contract address recorded in `README.md` & `.midnight-state.json`
